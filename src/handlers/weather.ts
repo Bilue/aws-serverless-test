@@ -1,9 +1,15 @@
 import { returnResponse } from "./return";
+import { getWeather } from '../services/weather';
 
-export const myhandler = () => {
-  // this is my code, this is my destiny\
+export const myhandler = async (event, context) => {
+  console.debug(event, context);
 
-  return returnResponse({});
+  const { queryStringParameters: { zipCode, countryCode } } = event;
+
+
+  const response = await getWeather({ zipCode, countryCode });
+
+  return returnResponse(response);
 }
 
 export const handler = myhandler;
